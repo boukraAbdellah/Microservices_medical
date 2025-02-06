@@ -8,12 +8,14 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.data.rest.core.config.RepositoryRestConfiguration;
 
 import java.util.Date;
 
 @SpringBootApplication
 @RequiredArgsConstructor
+@EnableFeignClients
 public class MsOrdonanceApplication implements CommandLineRunner {
     final OrdonanceRepository ordonanceRepository;
     final MedicamentRepository medicamentRepository;
@@ -26,8 +28,8 @@ public class MsOrdonanceApplication implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        Ordonance o1 = new Ordonance(null, new Date(),null,1L);
-        Ordonance o2 = new Ordonance(null, new Date(),null,2L);
+        Ordonance o1 = new Ordonance(null, new Date(),null,1L,null);
+        Ordonance o2 = Ordonance.builder().dateOrdonance(new Date()).idPatient(2L).build();
 
         o1 = ordonanceRepository.save(o1);
         o2 = ordonanceRepository.save(o2);
